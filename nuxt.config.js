@@ -126,5 +126,10 @@ module.exports = {
     // 追加
     strategy: 'no_prefix',
   },
+  plugins: [
+    //'plugins/axios',
+    // 追加
+    'plugins/myInject'
+  ],
 }
 
