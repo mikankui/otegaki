@@ -93,7 +93,7 @@ export default {
   },
   data () {
     return {
-      imgHeight: 800, // 追加
+      imgHeight: 500, // 追加
       menus: [
         { title: 'about', subtitle: 'このサイトはブログ"独学プログラマ"で公開されているチュートリアルのデモアプリケーションです' },
         { title: 'products', subtitle: '他にはない優れた機能の数々' },
@@ -141,9 +141,10 @@ export default {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 80px;
   color: #a0a0a0;
-  letter-spacing: .2em;
+  letter-spacing: .1em;
+  width:"50vw";
 }
 
 .welSubtitle {
