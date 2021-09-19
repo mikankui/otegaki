@@ -64,7 +64,6 @@ module.exports = {
   ** add PWA
   */
   buildModules: [
-    '@nuxt/image',
     '@nuxtjs/pwa',
     // Simple usage
     '@nuxtjs/vuetify',

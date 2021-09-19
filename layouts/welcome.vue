@@ -6,27 +6,36 @@
     />
     <!-- 追加 -->
     <div class=topBox>
+      <!--
       <nuxt-img 
         id="scroll-top"
         src="/top2.jpg"
         sizes="sm:99vw md:99vw lg:99vw"
           />
-      <v-row
-        align="center"
-        justify="center"
-        class="topBoxRow"
+          -->
+      <v-img
+        dark
+        src="top2.jpg"
+        gradient="to top right, rgba(255, 182, 193,.3), rgba(255, 192, 203,.6)"
+        :height="imgHeight"
       >
-        <v-col>
-          <h1 class="welTitle">
-            Otegaki
-          </h1>
-          <h4
-            class="welSubtitle"
-          >
-            温もりを、筆先に込めて
-          </h4>
-        </v-col>
-      </v-row>
+        <v-row
+          align="center"
+          justify="center"
+          class="topBoxRow"
+        >
+          <v-col>
+            <h1 class="welTitle">
+              Otegaki
+            </h1>
+            <h4
+              class="welSubtitle"
+            >
+              温もりを、筆先に込めて
+            </h4>
+          </v-col>
+        </v-row>
+      </v-img>
     </div>
     <!-- ここまで -->
 
@@ -120,7 +129,7 @@ export default {
   padding:0;
   }
 
-.topBox nuxt-img {
+.topBox v-img {
     width: 100vw;
   }
 
