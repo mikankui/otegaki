@@ -95,11 +95,11 @@ export default {
     return {
       imgHeight: 500, // 追加
       menus: [
-        { title: 'about', subtitle: 'このサイトはブログ"独学プログラマ"で公開されているチュートリアルのデモアプリケーションです' },
-        { title: 'products', subtitle: '他にはない優れた機能の数々' },
-        { title: 'price', subtitle: '会社の成長に合わせた3つのプラン' },
-        { title: 'contact', subtitle: 'お気軽にご連絡を' },
-        { title: 'company', subtitle: '私たちの会社' }
+        { title: 'about', subtitle: 'かわいいイラストやカッコイイ写真に、手書きのメッセージを添えて贈れます' },
+        { title: 'products', subtitle: '実際に作成したサンプルを紹介します。' },
+        { title: 'price', subtitle: '無料です。' },
+        { title: 'contact', subtitle: 'ご要望は、是非お聞かせください！私たちはサービスをもっと良くしたいと本気で取り組んでいます。' },
+        { title: 'company', subtitle: 'ちょっとだけ、サービスに関わっている人を紹介します。' }
       ]
     }
   }

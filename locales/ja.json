@@ -1,10 +1,10 @@
 {
     "menus": {
-      "about": "サイトについて",
-      "products": "製品",
-      "price": "価格",
+      "about": "サービス紹介",
+      "products": "サンプル",
+      "price": "価格(無料枠)",
       "contact": "お問合せ",
-      "company": "会社情報"
+      "company": "開発メンバー"
     },
 
     "pages": {
