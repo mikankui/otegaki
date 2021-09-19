@@ -41,7 +41,6 @@ module.exports = {
 	modules: 
 	[
       "@nuxtjs/axios",
-      '@nuxt/image',
       [
         'nuxt-i18n',
         {
