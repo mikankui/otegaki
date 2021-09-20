@@ -80,7 +80,6 @@ export default {
     welAbout: () => import('~/components/welcome/welAbout'),
     welProducts: () => import('~/components/welcome/welProducts'),
     welPrice: () => import('~/components/welcome/welPrice'),
-    welContact: () => import('~/components/welcome/welContact'),
     welCompany: () => import('~/components/welcome/welCompany'),
     welNews: () => import('~/components/welcome/welNews'),
     befLoginFooter: () => import('~/components/beforeLogin/befLoginFooter'),
@@ -91,10 +90,9 @@ export default {
       menus: [
         { title: 'about', subtitle: 'かわいいイラストやカッコイイ写真に、手書きのメッセージを添えて贈れます' },
         { title: 'products', subtitle: '実際に作成したサンプルを紹介します。' },
-        { title: 'price', subtitle: '無料でご利用頂きます。' },
+        { title: 'price', subtitle: '無料でご利用頂けます。' },
         { title: 'news', subtitle: '新しいテンプレート、新機能を順次リリースしています。' },
         
-        //{ title: 'contact', subtitle: 'ご要望は、是非お聞かせください！私たちはサービスをもっと良くしたいと本気で取り組んでいます。' },
         //{ title: 'company', subtitle: 'サービスに関わっている人を紹介します。' },
       ]
     }

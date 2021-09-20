@@ -1,25 +1,73 @@
 <template>
-        <v-sheet 
-            class="mt-5 mx-auto"
-            elevation="8"
-            max-width="80%"
+
+
+
+  <v-sheet
+    class="mx-auto"
+    elevation="1"
+    max-width="100%"
+  >
+    <v-slide-group
+      class="pa-1"
+      show-arrows
+    >
+      <v-slide-item
+         v-for="(item, i) in items"
+        :key="i"
+      >
+        <v-card
+          class="ma-1"
+          height="400"
+          width="200"
         >
-            <v-slide-group mobile-breakpoint="1000" show-arrows center-active>
+          <v-img 
+            :src="item.src"
+            max-height="500px"
+            widht="100%"
+          />
+        </v-card>
+      </v-slide-item>
+    </v-slide-group>
+  </v-sheet>
 
-                <v-slide-item v-for="(item, i) in items" :key="i">
-                    <v-card width="200" class="ma-4">
-                        <v-card-title>
-                            <v-img height="400px" contain :src="item.src"></v-img>
-                        </v-card-title>
-                        <v-card-text class="text-center">
-                            <b>{{ item.text }}</b>
-                        </v-card-text>
-                    </v-card>
-                </v-slide-item>
-            </v-slide-group>
-        </v-sheet>
+      <!--
+          <v-slide-group center-active>
+   
+    <v-slide-item show-arrows v-for="(item, i) in items" :key="i">
+      <v-container>
+            <v-row>
+              <v-col xs="12" sm="4" >
+                <v-card>
+                <v-card-title>
+                    <v-img 
+                      :src="item.src"
+                      max-height="500px"
+                      widht="100%"
+                    />
+                </v-card-title>
+                <v-card-text class="text-center">
+                    {{ item.text }}
+                </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+        </v-container>
+            </v-slide-item>
+  </v-slide-group>
+        -->
+
+
 </template>
-
+<style>
+.v-slide-group__next, .v-slide-group__prev {
+    /*align-items: center;
+    display: flex;
+    flex: 0 1 52px;
+    justify-content: center;
+    */
+    min-width: 20px;
+}
+</style>
 <script>
 export default {
   data(){
@@ -45,6 +93,18 @@ export default {
           {
             src: 'sample5.jpg',
             text:'友人の結婚を祝福'
+          },
+          {
+            src: 'sample6.jpg',
+            text:'子供の誕生に'
+          },
+          {
+            src: 'sample7.jpg',
+            text:'何でもない日に'
+          },
+          {
+            src: 'sample8.jpg',
+            text:'成人になったお祝いに'
           },
         ],
     }

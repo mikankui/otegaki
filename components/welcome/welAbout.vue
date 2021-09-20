@@ -1,26 +1,15 @@
 <template>
-  <div>
+  <v-container>
     <v-row
       justify="center" 
       align-content="center"
     >
-      <v-sheet
-        color="white"
-        elevation="0"
-        max-width="80%"
-      >
-
-        <v-row
-          justify="center" 
-          align-content="center"
-        >
-          <v-col cols=3 v-for="(item, i) in items" :key="i">
+          <v-col xs="12" sm="4" v-for="(item, i) in items" :key="i">
             <v-card
               class="mx-auto"
             >
               <v-img
                 :src="item.src"
-                max-height="500px"
               ></v-img>
 
               <v-card-title>
@@ -33,19 +22,8 @@
 
             </v-card>
           </v-col>
-        </v-row>
-
-
-      <v-col cols="3">
-        <!--
-          1
-          -->
-
-      </v-col>
-    </v-sheet>
     </v-row>
-  </div>
-
+  </v-container>
 </template>
 
 <script>
@@ -57,7 +35,7 @@ export default {
         {
           src:'about1.jpg',
           title:'1. カード選択',
-          text:'「ありがとう！」「ごめんね。。。」など、伝えたいメッセージに合わせてカードを選んでください。'
+          text:'「ありがとう！」「ごめんね。」など、伝えたいメッセージに合わせてカードを選びます。'
         },
         {
           src:'about2.jpg',
