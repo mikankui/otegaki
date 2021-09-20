@@ -2,9 +2,10 @@
     "menus": {
       "about": "サービス紹介",
       "products": "サンプル",
-      "price": "価格(無料枠)",
-      "contact": "お問合せ",
-      "company": "開発メンバー"
+      "price": "料金",
+      "news":"お知らせ",
+      "company": "開発メンバー",
+      "contact": "お問合せ"
     },
 
     "pages": {

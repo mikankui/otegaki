@@ -1,53 +1,47 @@
 <template>
   <div>
-    <v-row>
-      <v-col
-        v-for="n in 6"
-        :key="n"
-        class="d-flex child-flex"
-        cols="6"
-      >
-        <v-img
-          :src="`sample${n}.jpg`"
-          :lazy-src="`sample${n}.jpg`"
-          max-height="100"
-          max-width="180"
-          class="grey lighten-2"
-        >
-          <template v-slot:placeholder>
-            <v-row
-              class="fill-height ma-0"
-              align="center"
-              justify="center"
-            >
-              <v-progress-circular
-                indeterminate
-                color="grey lighten-5"
-              ></v-progress-circular>
-            </v-row>
-          </template>
-        </v-img>
-      </v-col>
-    </v-row>
-
     <v-row
-      class="blue lighten-4" 
-      style="height: 250px;"
       justify="center" 
       align-content="center"
     >
+      <v-sheet
+        color="white"
+        elevation="0"
+        max-width="80%"
+      >
 
-    <v-sheet
-      color="white"
-      elevation="0"
-      height="200px"
-      width="450px"
-    >
-      <v-card-title class="pb-8 text-subtitle-2">
-        <div class="text-left">{{appName}}は、スマホで手書きのメッセージが贈れます。</div>
-        <div class="text-left">遠く離れたあの人に、手書きだからこそ伝えられるモノを届けられるサービスです。</div>
-        <div class="text-left">文字だけでなく、イラストもOKです。</div>
-      </v-card-title>
+        <v-row
+          justify="center" 
+          align-content="center"
+        >
+          <v-col cols=3 v-for="(item, i) in items" :key="i">
+            <v-card
+              class="mx-auto"
+            >
+              <v-img
+                :src="item.src"
+                max-height="500px"
+              ></v-img>
+
+              <v-card-title>
+                {{ item.title }}
+              </v-card-title>
+
+              <v-card-subtitle>
+                {{ item.text }}
+              </v-card-subtitle>
+
+            </v-card>
+          </v-col>
+        </v-row>
+
+
+      <v-col cols="3">
+        <!--
+          1
+          -->
+
+      </v-col>
     </v-sheet>
     </v-row>
   </div>
@@ -59,26 +53,23 @@ export default {
     data ({ $config: { appName } }) {
     return {
       appName,
-      items: [
-          {
-            src: 'sample1.jpg',
-          },
-          {
-            src: 'sample2.jpg',
-          },
-          {
-            src: 'sample3.jpg',
-          },
-          {
-            src: 'sample4.jpg',
-          },
-          {
-            src: 'sample5.jpg',
-          },
-          {
-            src: 'sample6.jpg',
-          },
-        ],
+      items:[
+        {
+          src:'about1.jpg',
+          title:'1. カード選択',
+          text:'「ありがとう！」「ごめんね。。。」など、伝えたいメッセージに合わせてカードを選んでください。'
+        },
+        {
+          src:'about2.jpg',
+          title:'2. メッセージ作成',
+          text:'選んだカードに、あなたの手でメッセージを書いてください。手書きだからイラストも書込めます。'
+        },
+        {
+          src:'about3.jpg',
+          title:'3. メッセージ送信',
+          text:'完了すると、完成したメッセージカードを取得できます。さっそく、SMS/メールで送信しましょう！'
+        }
+      ]
     }
   }
 }

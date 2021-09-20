@@ -4,15 +4,8 @@
       :menus="menus"
       :img-height="imgHeight"
     />
-    <!-- 追加 -->
+
     <div class=topBox>
-      <!--
-      <nuxt-img 
-        id="scroll-top"
-        src="/top2.jpg"
-        sizes="sm:99vw md:99vw lg:99vw"
-          />
-          -->
       <v-img
         id="scroll-top"
         dark
@@ -89,6 +82,7 @@ export default {
     welPrice: () => import('~/components/welcome/welPrice'),
     welContact: () => import('~/components/welcome/welContact'),
     welCompany: () => import('~/components/welcome/welCompany'),
+    welNews: () => import('~/components/welcome/welNews'),
     befLoginFooter: () => import('~/components/beforeLogin/befLoginFooter'),
   },
   data () {
@@ -97,9 +91,11 @@ export default {
       menus: [
         { title: 'about', subtitle: 'かわいいイラストやカッコイイ写真に、手書きのメッセージを添えて贈れます' },
         { title: 'products', subtitle: '実際に作成したサンプルを紹介します。' },
-        { title: 'price', subtitle: '無料です。' },
-        { title: 'contact', subtitle: 'ご要望は、是非お聞かせください！私たちはサービスをもっと良くしたいと本気で取り組んでいます。' },
-        { title: 'company', subtitle: 'ちょっとだけ、サービスに関わっている人を紹介します。' }
+        { title: 'price', subtitle: '無料でご利用頂きます。' },
+        { title: 'news', subtitle: '新しいテンプレート、新機能を順次リリースしています。' },
+        
+        //{ title: 'contact', subtitle: 'ご要望は、是非お聞かせください！私たちはサービスをもっと良くしたいと本気で取り組んでいます。' },
+        //{ title: 'company', subtitle: 'サービスに関わっている人を紹介します。' },
       ]
     }
   }
