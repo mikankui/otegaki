@@ -10,7 +10,7 @@
         >
 
             <!-- class, action, methodを変更しないでください -->
-            <v-form ref="contact" v-model="isValid" class="formrun" action="https://form.run/api/v1/r/lwn8sora6aq1mzhiyyb8cred" method="post">
+            <v-form ref="contact" v-model="isValid" @submit="onSend" class="formrun" action="https://form.run/api/v1/r/lwn8sora6aq1mzhiyyb8cred" method="post">
             <!-- ↓自由に要素を追加・編集することができます -->
                 <v-container>
                     <v-row>
@@ -43,7 +43,7 @@
                             :disabled="sentIt"
                             label="メールアドレス [必須]"
                             name="_field_1"
-                            placeholder="tegakitaou.email@gmail.com"
+                            placeholder="textxxxx@gmail.com"
                             outlined
                             validate-on-blur
                         />
@@ -78,7 +78,8 @@
                         :loading="loading"
                         color="primary"
                         class="mr-2"
-                        @click="onSend"
+                        
+                        type="submit"
                     >
                         送信する
                     </v-btn>
@@ -145,11 +146,14 @@ export default {
   },
   methods: {
     onSend () {
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-        this.sentIt = true
-      }, 1500)
+        if(this.$refs.contact.validate()){
+            this.loading = true
+            
+            setTimeout(() => {
+                this.loading = false
+                this.sentIt = true
+            }, 1500)
+        }
     },
     formReset () {
       this.sentIt = false
