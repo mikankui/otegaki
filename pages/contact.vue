@@ -1,5 +1,6 @@
 <template>
     <v-row
+        class="my-5"
         justify="center"
     >
         <v-col
@@ -25,7 +26,8 @@
                             v-model="name"
                             :rules="nameRules"
                             :disabled="sentIt"
-                            label="お名前"
+                            label="お名前[必須]"
+                            name="_field_2"
                             placeholder="手書 太郎"
                             outlined
                         />
@@ -40,6 +42,7 @@
                             :rules="emailRules"
                             :disabled="sentIt"
                             label="メールアドレス [必須]"
+                            name="_field_1"
                             placeholder="tegakitaou.email@gmail.com"
                             outlined
                             validate-on-blur
@@ -55,6 +58,7 @@
                         outlined
                         auto-grow
                         label="お問い合わせ [必須]"
+                        name="_field_5"
                         placeholder="お問い合わせ入力してください"
                     />
 
