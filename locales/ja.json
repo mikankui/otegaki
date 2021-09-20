@@ -12,6 +12,10 @@
       "signup": "会員登録",
       "login": "ログイン",
       "logout": "ログアウト",
+      "privacyPpolicy":"プライバシーポリシー",
+      "terms":"利用規約",
+      "contact": "お問合せ",
+      "news":"お知らせ",
       "account": {
         "settings": "アカウント設定",
         "password": "パスワード変更"

@@ -7,15 +7,21 @@
       color="black"
       :height="height"
     >
-      <v-col
-        cols="12"
-        class="py-0"
+      <v-row
+        justify="center"
+        no-gutters
       >
-        <div class="text-center text-body-2">
-          &copy;{{ copyRightYear }}
-          <strong>{{ appName }}</strong>
-        </div>
-      </v-col>
+        <privacyPolicyLink />
+        <termsLink />
+        <contactLink />
+        <v-col
+          class="text-center white--text"
+          cols="12"
+        >
+              &copy;{{ copyRightYear }}
+              <strong>{{ appName }}</strong>
+        </v-col>
+      </v-row>
     </v-footer>
   </div>
 </template>
@@ -25,8 +31,13 @@ export default {
   data ({ $config: { appName } }) {
     return {
       appName,
-      height: 32
+      height: 64
     }
+  },
+  components: {
+    privacyPolicyLink: () => import('~/components/beforeLogin/privacyPolicyLink'),
+    termsLink: () => import('~/components/beforeLogin/termsLink'),
+    contactLink: () => import('~/components/beforeLogin/contactLink')
   },
   computed: {
     copyRightYear () {
