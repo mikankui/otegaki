@@ -33,6 +33,8 @@
     </div>
     <!-- ここまで -->
 
+    <templatesLink />
+
     <!--メニュー-->
     <v-sheet>
       <v-container
@@ -83,6 +85,7 @@ export default {
     welCompany: () => import('~/components/welcome/welCompany'),
     welNews: () => import('~/components/welcome/welNews'),
     befLoginFooter: () => import('~/components/beforeLogin/befLoginFooter'),
+    templatesLink: () => import('~/components/beforeLogin/templatesLink')
   },
   data () {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    index.vue
+    ログイン機能は作成中
   </div>
 </template>
 
