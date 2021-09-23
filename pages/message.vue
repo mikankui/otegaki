@@ -24,11 +24,12 @@ export default {
     return {
       drawProps: 
         {
-          title: "Freehand SVG Draw",
+          title: "メッセージを書き込めます",
           colors: ['#EAEAEA','#292929', '#00A0FF', '#FF29AA', '#FFE500', '#FF3030', '#12EB0A'],
           bgColors: ['#EAEAEA','#292929', '#00A0FF', '#FF29AA', '#FFE500', '#FF3030', '#12EB0A'],
           lineColor: "#292929",
-          bgColor: "#EAEAEA"
+          bgColor: "#FFFFFF",
+          cardId: this.$store.state.cardId
         }
       
     }

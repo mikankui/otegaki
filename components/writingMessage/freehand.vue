@@ -2,22 +2,20 @@
   <div class="draw">
 
     <div class="toolbar" :style="{ right: toolBarRight }">
-
-
       <div class="allColors">
-
         <div class="panelUp mobile">
           
         </div>
 
         <transition-group class="lineColor" name="color-list" tag="ul" >
-          <li v-for="(color, $index) in colors" v-bind:style='{ "background-color": color }' v-on:click="changeLineColor(color, $index)" v-bind:key="color"></li>
+          <li v-for="(color, $index) in colors" :style='{ "background-color": color }' v-on:click="changeLineColor(color, $index)" v-bind:key="color"></li>
         </transition-group>
 
-
+        <!--バックグラウンドは画像がくるので色変更不要
         <transition-group class="bgColor" name="color-list" tag="ul" >
-          <li v-for="(color, $index) in bgColors" v-bind:key="color" v-bind:style='{ "background-color": color }' @click="changeBg(color, $index)"></li>
+          <li v-for="(color, $index) in bgColors" :key="color" :style='{ "background-color": color }' @click="changeBg(color, $index)"></li>
         </transition-group>
+        -->
 
       </div>
 
@@ -28,7 +26,7 @@
       <li class="bgColor" v-bind:style='{ "background-color": bgColor }' @click="changeBg()" ></li>
     </ul> -->
 
-    <div class="buttons"  v-bind:class="{ showButtons: undo }" >
+    <div class="buttons"  :class="{ showButtons: undo }" >
       <button v-on:click="download()" class="btn submitBtn"> <img src="download.svg" alt="Download"> </button>
       <button v-on:click="clean()" class="btn clearBtn"> <img src="clear.svg" alt="Clear Canvas"> </button>
       <button v-on:click="undoLine()" class="btn undoBtn" > <img src="undo.svg" alt="Undo"> </button>
@@ -36,7 +34,7 @@
     
     <div class="canvas">
       
-      <h2 v-bind:style='{ "color": lineColor }' class="noselect" v-if="!undo"> {{ title }} </h2>
+      <h2 :style='{ "color": lineColor }' class="noselect" v-if="!undo"> {{ title }} </h2>
 
       <!-- Canvas size is defined in CSS, search for ".canvas" -->
 
@@ -50,12 +48,17 @@
         @onmouseleave="outOfCanvas()"
         @touchcancel="outOfCanvas()"
         >
+        <!--
+        <rect id="bg" width="100%" height="100%" :fill="bgColor"></rect>
+        -->
+        <image 
+          :xlink:href="bgImage"
+          :href="bgImage" x="0" y="0" height="100%" width="100%"/>
         
-        <rect id="bg" width="100%" height="100%" v-bind:fill="bgColor"></rect>
       
       </svg>
 
-      <div id="cursor" v-bind:style='{ "background-color": lineColor }'></div>
+      <div id="cursor" :style='{ "background-color": lineColor }'></div>
 
     </div>
 
@@ -77,6 +80,7 @@
       'bgColors',
       'lineColor',
       'bgColor',
+      'cardId',
     ],
     data () {
       return {
@@ -88,7 +92,8 @@
           radius: 2.5,
           width: 8,
           undo: false,
-          onCanvas: false // mouseout event is not firing, dunno why
+          onCanvas: false, // mouseout event is not firing, dunno why
+          bgImage:require('@/assets/images/W600PX/alex-nicolopoulos-hxn2HjZHyQE-unsplash.jpg')
         }
       },
 
@@ -163,26 +168,34 @@
 
       lineMove: function(){
 
+        try{
         let e = event
         let rect = this.board.getBoundingClientRect();
 
-        let cursorX = Math.round( e.clientX - rect.x ) || Math.round(e.changedTouches[0].clientX - rect.x)
-        let cursorY = Math.round( e.clientY - rect.y )  || Math.round(e.changedTouches[0].clientY - rect.y)
+        //if(e.changedTouches == undefined){
+        //console.log("error:"+e)
+        //}else{
+          let cursorX = Math.round( e.clientX - rect.x ) || Math.round(e.changedTouches[0].clientX - rect.x)
+          let cursorY = Math.round( e.clientY - rect.y )  || Math.round(e.changedTouches[0].clientY - rect.y)
 
 
-        if ( this.gesture == true ){
-          this.line += 'L' + cursorX + ',' + cursorY
-          // this.line += 'L'+(e.clientX||e.touches[0].clientX)+','+(e.clientY||e.touches[0].clientY)+' '
-          this.trace((e.clientX||e.touches[0].clientX), (e.clientY||e.touches[0].clientY))
+          if ( this.gesture == true ){
+            this.line += 'L' + cursorX + ',' + cursorY
+            // this.line += 'L'+(e.clientX||e.touches[0].clientX)+','+(e.clientY||e.touches[0].clientY)+' '
+            this.trace((e.clientX||e.touches[0].clientX), (e.clientY||e.touches[0].clientY))
+          }
+
+          this.cursor.style.top =  e.clientY - rect.y - this.radius+'px'
+          this.cursor.style.left = e.clientX - rect.x - this.radius+'px'
+
+          this.cursorX = e.clientX - rect.x
+          this.cursorY = e.clientY - rect.y
+
+          this.onCanvas = true
+        //}
+        }catch{
+          console.log("error:lineMove");
         }
-
-        this.cursor.style.top =  e.clientY - rect.y - this.radius+'px'
-        this.cursor.style.left = e.clientX - rect.x - this.radius+'px'
-
-        this.cursorX = e.clientX - rect.x
-        this.cursorY = e.clientY - rect.y
-
-        this.onCanvas = true
       },
 
       trace: function(x,y){
@@ -298,7 +311,7 @@
 
         this.setActiveColor('.bgColor li')
 
-        document.querySelectorAll('.drawSvg #bg').setAttribute('fill', this.bgColor )
+        document.getElementById('bg').setAttribute('fill', this.bgColor )
 
         this.arrayMove( this.bgColors, index, 0 )
 
@@ -307,8 +320,12 @@
       },
 
       undoLine: function(){
-        let paths = document.querySelectorAll('.drawSvg path');
-        document.getElementsByClassName('.drawSvg').removeChild(paths[paths.length-1])
+        try{
+          let paths = document.querySelectorAll('.drawSvg path');
+          document.getElementsByClassName('drawSvg')[0].removeChild(paths[paths.length-1])
+        }catch{
+          console.log("error:undoLine");
+        }
       },
 
       clean: function (){
@@ -417,6 +434,7 @@
   border: none;
   margin-left: 0;
   font-size: 16px;
+  width:32px;
   margin-bottom: 12px;
   cursor: pointer;
   opacity: 0.75;
