@@ -67,6 +67,7 @@ module.exports = {
     '@nuxtjs/pwa',
     // Simple usage
     '@nuxtjs/vuetify',
+    '@aceforth/nuxt-optimized-images',
   ],
   pwa: {
     icon: false, // disables the icon module
@@ -82,23 +83,9 @@ module.exports = {
       background_color: '#212121'
     }
   },
-  image: {
-    domains: [
-      'images.unsplash.com'
-    ],
-    alias: {
-      unsplash: 'https://images.unsplash.com'
-    },
-    // The screen sizes predefined by `@nuxt/image`:
-    screens: {
-      xs: 320,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      xxl: 1536,
-      '2xl': 1536
-    },
+  optimizedImages: {
+    optimizeImages: true,
+    optimizeImagesInDev: true, // 追加
   },
   publicRuntimeConfig: {
     appName: process.env.APP_NAME // 環境選定
@@ -129,7 +116,8 @@ module.exports = {
   plugins: [
     //'plugins/axios',
     // 追加
-    'plugins/myInject'
+    'plugins/myInject',
+    'plugins/lazyload.js'
   ],
 }
 

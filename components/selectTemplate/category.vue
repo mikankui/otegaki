@@ -1,14 +1,14 @@
 <template>
 
     <v-container
-      class="grey lighten-5 ma-0 pa-0"
+      class="grey lighten-5 pt-2"
     >
       <v-row
         no-gutters
       >
         <v-col
-            v-for="category in categories"
-            :key="category"
+            v-for="(category,index) in categories"
+            :key="index"
             align="center"
             class="ma-0 pa-0"
         >
