@@ -11,7 +11,7 @@ class MyInject {
         return (typeof (title) === 'object') ? title.index : title
     }
 }
-  
+
 export default ({ app }, inject) => {
     inject('my', new MyInject(app))
 }
