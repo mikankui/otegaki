@@ -113,6 +113,8 @@ module.exports = {
     // 追加
     strategy: 'no_prefix',
   },
+  axios: {
+  },
   plugins: [
     //'plugins/axios',
     // 追加
