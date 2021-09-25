@@ -39,15 +39,19 @@ export const actions = {
     //@TODO check card not null
     
     let card = this.state.selectedCard;
-    console.log(card)
+    console.log("card:"+card)
     //選択した画像をセット
     let url = require('@/assets/images/W600PX/'+card+'.jpg');
+    console.log("url:"+url)
     let blob = await this.$axios.get(url, { responseType: 'blob' })
+    console.log("blob:"+blob)
 
     //選択したカードデータを取得
     let base64 = await readAsDataURL(blob.data)
+    console.log("base64:"+base64)
     var file = new File([blob], "blob");
     let imgFile =await readAsImage(base64) 
+    console.log("imgFile:"+imgFile)
     let width = imgFile.width
     let height = imgFile.height
     //console.log(card + "/" + width + "/" + height)
