@@ -114,6 +114,10 @@ module.exports = {
     strategy: 'no_prefix',
   },
   axios: {
+    proxy: true
+  },
+  proxy: {
+    '/api/': { target: 'http://localhost:3000', pathRewrite: {'^/api/': ''} }
   },
   plugins: [
     //'plugins/axios',
