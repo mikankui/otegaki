@@ -119,7 +119,7 @@ module.exports = {
     //'plugins/axios',
     // 追加
     'plugins/myInject',
-    'plugins/lazyload.js'
+    'plugins/lazyload.js',
   ],
 }
 

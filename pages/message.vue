@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-      
+<v-row>
+  <v-col>
         <freehand
           v-bind:title="drawProps.title"
           v-bind:colors="drawProps.colors"
@@ -12,14 +12,13 @@
           v-on:drawSubmit="saveDrawing"
           >
         </freehand>
-
-  </div>
+  </v-col>
+</v-row>
 </template>
 
 <script>
 
 export default {
-  name: 'app',
   data() {
     return {
       drawProps: 
@@ -29,16 +28,14 @@ export default {
           bgColors: ['#EAEAEA','#292929', '#00A0FF', '#FF29AA', '#FFE500', '#FF3030', '#12EB0A'],
           lineColor: "#292929",
           bgColor: "#FFFFFF",
-          cardId: this.$store.state.cardId
-        }
-      
+        },      
     }
   },
   components: {
     freehand: () => import('@/components/writingMessage/freehand'),
   },
   layout ({ store }) {
-    return store.state.loggedIn ? 'loggedIn' : 'beforeLogin'
+    return store.state.loggedIn ? 'loggedIn' : 'beforeLoginMessage'
   },
   methods: {
     changeLineColor: function(color){
@@ -49,33 +46,16 @@ export default {
     },
     saveDrawing: function(drawSvg){
       console.log (drawSvg)      
-    }
+    },
   },
   mounted: function() {
+  },
+  async fetch({ store }){
+    await store.dispatch('setCardInfo')
   }
 }
 </script>
 
 <style>
-body, html{
-  font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
-  background: #131415;
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  min-height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
+
 </style>
