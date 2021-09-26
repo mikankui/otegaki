@@ -33,10 +33,11 @@
     </ul>
     -->
 
-    <div class="buttons"  :class="{ showButtons: undo }" >
-      <button v-on:click="download()" class="btn submitBtn"> <img src="download.svg" alt="Download"> </button>
+    <div class="buttons showButtons" >
+      <button v-on:click="download_png()" class="btn submitBtn"> <img src="download.svg" alt="Download"> </button>
       <button v-on:click="clean()" class="btn clearBtn"> <img src="clear.svg" alt="Clear Canvas"> </button>
       <button v-on:click="undoLine()" class="btn undoBtn" > <img src="undo.svg" alt="Undo"> </button>
+      <messageHelp/>
     </div>
     
     <div 
@@ -81,11 +82,11 @@
 </template>
 
 <script>
-// hello jquery
-//const $ = document.querySelector.bind(document);
-//const $$ = document.querySelectorAll.bind(document);
 
   export default {
+  components: { 
+    messageHelp: () => import('@/components/writingMessage/messageHelpDialog'),
+   },
     name: 'Draw',
     props: [
       'title',
@@ -399,6 +400,37 @@
         return "data:image/svg+xml," + encodeURIComponent(serialSvg);
 
       },
+
+      /** svg to png convert */
+      async download_png(){
+        console.log("start download png")
+        let drawing = this.svgDataURL( document.getElementsByClassName('.drawSvg') )
+        var canvas = document.createElement("canvas");
+        canvas.width = this.board.width.baseVal.value;
+        canvas.height = this.board.height.baseVal.value;
+        console.log("create canvas:" + canvas.width + ":" + canvas.height)
+
+        var ctx = canvas.getContext("2d");
+        var image = await this.svgToImage(drawing);
+        ctx.drawImage( image, 0, 0 );
+
+        var dl = document.createElement("a");
+        dl.setAttribute("href", canvas.toDataURL("image/png"))
+        dl.setAttribute("download", "OTEGAKI.png");
+        dl.click();
+      },
+      /** svgをcanvasに描画させる*/
+      async svgToImage(drawing) {
+        return new Promise((resolve, reject) => {
+          let img = new Image();
+          img.onload = () => { resolve(img); };
+          img.onerror = (error) => { reject(error); };
+
+          console.log("set image.src")
+          console.log(drawing)
+          img.src = drawing;
+        })
+      }
     },
     mounted: function () {
 
@@ -443,13 +475,34 @@
     height: auto;
   }
 
+#cursor{
+  top: 50%;
+  left: 50%;
+}
 
+#cursor, .dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 100%;
+  position: absolute;
+  opacity: .5;
+  pointer-events: none;
+  transition: opacity .1s ease-in-out;
 
+}
+
+.drawSvg rect{
+  transition: fill .2s;
+}
+
+/** -------------------------------*/
+/* toolbar */
+/** -------------------------------*/
 .draw .buttons{
   width: 100%;
   left: 0;
   top: 0;
-  margin-top: 24px;
   display: flex;
   justify-content: flex-start;
   opacity: 0;
@@ -487,27 +540,6 @@
 .draw .undoBtn{
   justify-self: flex-end;
   margin-left: auto;
-}
-
-#cursor{
-  top: 50%;
-  left: 50%;
-}
-
-#cursor, .dot {
-  display: block;
-  width: 5px;
-  height: 5px;
-  border-radius: 100%;
-  position: absolute;
-  opacity: .5;
-  pointer-events: none;
-  transition: opacity .1s ease-in-out;
-
-}
-
-.drawSvg rect{
-  transition: fill .2s;
 }
 
 </style>

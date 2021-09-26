@@ -1,17 +1,17 @@
 <template>
 <v-row>
   <v-col>
-        <freehand
-          v-bind:title="drawProps.title"
-          v-bind:colors="drawProps.colors"
-          v-bind:bgColors="drawProps.bgColors"
-          v-bind:lineColor = "drawProps.lineColor"
-          v-bind:bgColor = "drawProps.bgColor"
-          v-on:changeLineColor = "changeLineColor"
-          v-on:changeBgColor = "changeBgColor"
-          v-on:drawSubmit="saveDrawing"
-          >
-        </freehand>
+    <messageFreehand
+      v-bind:title="drawProps.title"
+      v-bind:colors="drawProps.colors"
+      v-bind:bgColors="drawProps.bgColors"
+      v-bind:lineColor = "drawProps.lineColor"
+      v-bind:bgColor = "drawProps.bgColor"
+      v-on:changeLineColor = "changeLineColor"
+      v-on:changeBgColor = "changeBgColor"
+      v-on:drawSubmit="saveDrawing"
+      >
+    </messageFreehand>
   </v-col>
 </v-row>
 </template>
@@ -32,7 +32,7 @@ export default {
     }
   },
   components: {
-    freehand: () => import('@/components/writingMessage/freehand'),
+    messageFreehand: () => import('@/components/writingMessage/messageFreehand'),
   },
   layout ({ store }) {
     return store.state.loggedIn ? 'loggedIn' : 'beforeLoginMessage'
