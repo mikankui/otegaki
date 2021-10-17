@@ -68,6 +68,7 @@ module.exports = {
     // Simple usage
     '@nuxtjs/vuetify',
     '@aceforth/nuxt-optimized-images',
+    '@nuxtjs/composition-api/module',
   ],
   pwa: {
     icon: false, // disables the icon module
@@ -125,5 +126,10 @@ module.exports = {
     'plugins/myInject',
     'plugins/lazyload.js',
   ],
+  //for Nuxt Composition API
+  generate: {
+    // choose to suit your project
+    interval: 2000,
+  },
 }
 

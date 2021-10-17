@@ -72,6 +72,7 @@ export default {
 {src:require('@/assets/images/original/wout-vanacker-l4HBYkURqvE-unsplash.jpg'+"?resize&sizes[]=300&sizes[]=600&sizes[]=1000")},
 */
 {cardId:'alex-nicolopoulos-hxn2HjZHyQE-unsplash',src:require('@/assets/images/W600PX/alex-nicolopoulos-hxn2HjZHyQE-unsplash.jpg')},
+/*
 {cardId:'arjun-ken-CeK8ohn3c7A-unsplash',src:require('@/assets/images/W600PX/arjun-ken-CeK8ohn3c7A-unsplash.jpg')},
 {cardId:'brian-asare-91NYyecWlHA-unsplash',src:require('@/assets/images/W600PX/brian-asare-91NYyecWlHA-unsplash.jpg')},
 {cardId:'deva-williamson-ntfGWVbBiO0-unsplash',src:require('@/assets/images/W600PX/deva-williamson-ntfGWVbBiO0-unsplash.jpg')},
@@ -102,7 +103,7 @@ export default {
 {cardId:'takashi-miyazaki-9wVMpUP9r0E-unsplash',src:require('@/assets/images/W600PX/takashi-miyazaki-9wVMpUP9r0E-unsplash.jpg')},
 {cardId:'tim-zankert-gm3M-CsuynI-unsplash',src:require('@/assets/images/W600PX/tim-zankert-gm3M-CsuynI-unsplash.jpg')},
 {cardId:'wout-vanacker-l4HBYkURqvE-unsplash',src:require('@/assets/images/W600PX/wout-vanacker-l4HBYkURqvE-unsplash.jpg')},
-        ],
+        */],
     }
   },
 
