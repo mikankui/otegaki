@@ -13,8 +13,8 @@
               :width="cardWidth"
               :height="cardHeight"
               :viewBox="cardViewBox"
-                    :transform="baseImageTransform"
-                    :transform-origin="baseImageTransformOrigin"
+              :transform="baseImageTransform"
+              :transform-origin="baseImageTransformOrigin"
                 @mousedown="linestart"
                 @touchstart="pointerdown_handler"
                 @mousemove="lineMove"
@@ -380,6 +380,12 @@ export default {
         this.baseImageScale = tmpScale;
       }
 
+      //#27 iosでピンチイン／アウトが効かない問題
+      document.querySelector(".drawSvg").style.transform =
+        "scale(" + this.baseImageScale + ")";
+      document.querySelector(".drawSvg").style.transformOrigin =
+        this.baseImageX + xc + "px " + (this.baseImageY + yc) + "px ";
+      /*
       let translateStr =
         "translate(" + this.baseImageX + " " + this.baseImageX + ")";
       let scaleStr = " scale(" + this.baseImageScale + ")";
@@ -393,6 +399,7 @@ export default {
       this.eventLog(
         "baseImageTransformOrigin: " + this.baseImageTransformOrigin
       );
+      */
     },
     //移動
     updateTransfrom_move: function (dx, dy) {
@@ -598,12 +605,15 @@ export default {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  z-index: 1;
 }
 
 .canvas .drawSvg,
 .canvas image {
   width: 100%;
   height: auto;
+  transform: scale(1);
+  transform-origin: 100 100;
 }
 
 #cursor {
