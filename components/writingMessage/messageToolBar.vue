@@ -28,6 +28,7 @@ export default {
       document.getElementById("log").innerText = logstr;
     },
     undoLine: function () {
+      document.getElementById("log").innerText = "";
       try {
         let paths = document.getElementById("freehands").childNodes;
         this.eventLog("undoLine:" + paths.length);

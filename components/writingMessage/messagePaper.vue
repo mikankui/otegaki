@@ -127,6 +127,12 @@ export default {
       this.lineColor = "#CCCCCC";
       this.updateDeviceWH();
     },
+    updateDeviceWH: function () {
+      // デバイス長と画像幅の比率
+      let rect = this.board.getBoundingClientRect();
+      this.deviceWidth = rect.width;
+      this.deviceHeight = rect.height;
+    },
     pointerdown_handler: function (ev) {
       // pointerdown イベントは、タッチ操作の開始を知らせます。
       // このイベントは2本指ジェスチャーをサポートするためにキャッシュされます
@@ -142,24 +148,6 @@ export default {
         this.setPinchCenter(ev);
         this.setStartpoint(ev);
       }
-    },
-    updateDeviceWH: function () {
-      // デバイス長と画像幅の比率
-      let rect = this.board.getBoundingClientRect();
-      this.deviceWidth = rect.width;
-      this.deviceHeight = rect.height;
-      /*
-      this.eventLog(
-        "rect: " +
-          this.deviceWidth +
-          " " +
-          this.deviceHeight +
-          " " +
-          this.cardWidth +
-          " " +
-          this.cardBaseHeight
-      );
-      */
     },
     pointermove_handler: function (ev) {
       let touches = ev.changedTouches;
@@ -192,69 +180,33 @@ export default {
         let yc = y2 + (y1 - y2) / 2;
 
         if (this.baseDistance) {
-          //ViewBoxの設定値
-          /*
-          let [x, y, w, h] = this.cardViewBox
-            .split(" ")
-            .map((v) => parseFloat(v));
-          */
-
           //ピンチ開始時からの差分を計算
           let distance = this.getDistance(ev);
+          //zoomが効きすぎる場合の調整係数
+          let KANDO = 0.5;
           let scale = distance / this.baseDistance;
           let scaleRate = (distance - this.baseDistance) / this.baseDistance;
           this.eventLog("scaleRate: " + scaleRate);
 
           if (scale && scale != Infinity && scale != 0) {
-            let dx = this.deviceWidth * scaleRate;
-            let dy = this.deviceHeight * scaleRate;
+            let dx = x2 - x1; //this.deviceWidth * scaleRate;
+            let dy = y2 - y1; //this.deviceHeight * scaleRate;
             //this.eventLog("dx dy : " + Math.round(dx) + "/" + Math.round(dy));
             //ピンチアウト／ピンチイン
-            if (Math.abs(scaleRate) > 0.1) {
-              /*
-                let dw = w * scaleRate ;
-                let dh = h * scaleRate ;
-
-                w = w - dw ;
-                h = h - dh ;
-                x = x - dx;
-                y = y - dy ;
-                this.eventLog("[Pinch]: " + Math.round(dx) + " " + Math.round(dy) + " " + Math.round(dw) + " " + Math.round(dh));
-                //変化率の基準を更新
-                //this.baseDistance = distance;
-                this.startX = x;
-                this.startY = y;
-                this.updateViewBox(x,y,w,h);
-                */
-              //BaseImageの変化
-              this.updateTransfrom_zoom(scale, xc, yc, -dx / 2, -dy / 2);
+            if (Math.abs(scaleRate) > 0.05) {
+              this.eventLog("■ZOOM");
+              this.updateTransfrom_zoom(
+                1 + scaleRate * KANDO,
+                xc,
+                yc,
+                -dx / 2,
+                -dy / 2
+              );
             }
             //移動
-            else if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
-              //let dx = this.getDeltaX(ev);
-              //let dy = this.getDeltaY(ev);
-              //x = x - dx;
-              //y = y - dy;
-              //変化率の基準を更新
-              /*
-              this.eventLog(
-                "[Move]: start " +
-                  Math.round(this.startX) +
-                  " " +
-                  Math.round(this.startY)
-              );
-              this.eventLog(
-                "[Move]: delta " + Math.round(dx) + " " + Math.round(dy)
-              );
-              */
-              /*
-              this.eventLog(
-                "[Move]: after " + Math.round(x) + " " + Math.round(y)
-              );
-              */
-              //this.updateViewBox(x, y, w, h);
-              //画像移動 (画像の移動ではなくviewboxで対応する。コメントアウト)
-              //this.updateTransfrom_move(dx, dy);
+            else if (Math.abs(dx) > 0 || Math.abs(dy) > 0) {
+              this.eventLog("■MOVE");
+              this.updateTransfrom_move(dx * KANDO, dy * KANDO);
             }
           }
         } else {
@@ -274,43 +226,6 @@ export default {
       } else if (touches.length == 2) {
         this.baseDistance = 0;
       }
-    },
-    //-------------------------------------
-    // viewboxを更新
-    //-------------------------------------
-    updateViewBox(x, y, w, h) {
-      //viewbox
-      x = this.returnInt(x);
-      y = this.returnInt(y);
-      w = this.returnMaxOrInt(w, this.cardBaseWidth);
-      h = this.returnMaxOrInt(h, this.cardBaseHeight);
-      /*
-      if (w == this.cardBaseWidth) {
-        x = 0;
-      }
-      if (h == this.cardBaseHeight) {
-        y = 0;
-      }
-      */
-      this.cardViewBox = [x, y, w, h].join(" ");
-    },
-
-    //viewboxの値設定用関数
-    returnInt: function (x) {
-      return Math.round(x);
-    },
-    return0orInt: function (x) {
-      return x >= 0 ? Math.round(x) : 0;
-    },
-    //最大と最小の間になるようにする(viewboxは拡大の場合widthが小さくなるので混乱しないよう注意)
-    returnMaxOrInt: function (x, min) {
-      if (x > min) {
-        x = min;
-      } else if (x < min / 5) {
-        //拡大は3倍までとする
-        x = min / 5;
-      }
-      return Math.round(x);
     },
     //タッチ2点の距離
     getDistance: function (ev) {
@@ -383,68 +298,91 @@ export default {
       //#27 iosでピンチイン／アウトが効かない問題
       document.querySelector(".drawSvg").style.transform =
         "scale(" + this.baseImageScale + ")";
-      document.querySelector(".drawSvg").style.transformOrigin =
-        this.baseImageX + xc + "px " + (this.baseImageY + yc) + "px ";
-      /*
-      let translateStr =
-        "translate(" + this.baseImageX + " " + this.baseImageX + ")";
-      let scaleStr = " scale(" + this.baseImageScale + ")";
+      //描画の中心移動
+      this.moveTransfromOrigin(xc, yc);
+      this.updateTransfromOrigin(dx, dy);
 
-      this.baseImageTransform = translateStr + scaleStr;
-      this.baseImageTransformOrigin =
-        this.baseImageX + xc + " " + (this.baseImageY + yc);
-
-      //this.eventLog("xc yc dx dy : " + " " + xc + " " + yc + " " + dx + " " + dy);
-      this.eventLog("updateTransfrom: " + this.baseImageTransform);
       this.eventLog(
-        "baseImageTransformOrigin: " + this.baseImageTransformOrigin
+        "scal xc yc : " +
+          Math.round(this.baseImageScale) +
+          "/" +
+          Math.round(xc) +
+          "/" +
+          Math.round(yc)
       );
-      */
     },
     //移動
     updateTransfrom_move: function (dx, dy) {
       //画像が拡大されてない場合は、移動の必要なし
       //画像全体が描画されるよう位置を初期値に設定
       if (this.baseImageScale <= 1) {
-        this.eventLog("updateTransfrom_move: scale is 1");
-        this.baseImageX = 0;
-        this.baseImageY = 0;
+        this.resteTransfromOriginX();
+        this.resteTransfromOriginY();
       } else {
-        let nextX = this.baseImageX - dx;
-        let nextY = this.baseImageY - dy;
-        let maxW = this.deviceWidth * this.baseImageScale;
-        let maxH = this.deviceHeight * this.baseImageScale;
-
-        //移動後に描画領域からはみ出した場合の考慮
-        // x + dx < 0 なら x=0
-        // (w * scale) - x + dx < w なら x = w*scale - w
-
-        //x方向
-        if (nextX < 0) {
-          this.baseImageX = 0;
-        } else if (maxW - nextX < this.deviceWidth) {
-          this.baseImageX = this.deviceWidth * (this.baseImageScale - 1);
-        } else {
-          this.baseImageX = nextX;
-        }
-
-        //y方向
-        if (nextY < 0) {
-          this.baseImageY = 0;
-        } else if (maxH - nextY < this.deviceHeight) {
-          this.baseImageY = this.deviceHeight * (this.baseImageScale - 1);
-        } else {
-          this.baseImageY = nextY;
-        }
-
-        let translateStr =
-          "translate(" + this.baseImageX + " " + this.baseImageY + ")";
-        let scaleStr = " scale(" + this.baseImageScale + ")";
-
-        this.baseImageTransform = translateStr + scaleStr;
-
-        this.eventLog("updateTransfrom_move: " + this.baseImageTransform);
+        //画像移動（パン）
+        this.eventLog("dx dy : " + Math.round(dx) + "/" + Math.round(dy));
+        this.updateTransfromOrigin(dx, dy);
       }
+    },
+    //原点x,yを移動
+    moveTransfromOrigin: function (newx, newy) {
+      document.querySelector(".drawSvg").style.transformOrigin =
+        newx + "px " + newy + "px";
+    },
+    //x,yの移動量を追加
+    updateTransfromOrigin: function (dx, dy) {
+      let [oldx, oldy] = document
+        .querySelector(".drawSvg")
+        .style.transformOrigin.split(" ")
+        .map((v) => parseFloat(v.replace("px", "")));
+
+      //移動後の位置
+      let newx = oldx - dx;
+      let newy = oldy - dy;
+
+      //x方向
+      if (newx < 0) {
+        //移動後にマイナスになる場合は0とする
+        newx = 0;
+      } else if (newx > this.deviceWidth * 0.8) {
+        //移動後が大きく利過ぎないようにする
+        newx = this.deviceWidth * 0.8;
+      } else {
+        //上記以外のときはそのまま
+      }
+
+      //y方向
+      if (newy < 0) {
+        //移動後にマイナスになる場合は0とする
+        newy = 0;
+      } else if (newy > this.deviceHeight * 0.8) {
+        //移動後が大きく利過ぎないようにする
+        newy = this.deviceHeight * 0.8;
+      } else {
+        //上記以外のときはそのまま
+      }
+
+      this.eventLog("mewx newy : " + Math.round(newx) + "/" + Math.round(newy));
+      document.querySelector(".drawSvg").style.transformOrigin =
+        newx + "px " + newy + "px";
+    },
+    //xを原点に戻す
+    resteTransfromOriginX: function () {
+      let [oldx, oldy] = document
+        .querySelector(".drawSvg")
+        .style.transformOrigin.split(" ")
+        .map((v) => parseFloat(v.replace("px", "")));
+      document.querySelector(".drawSvg").style.transformOrigin =
+        "0px " + oldy + "px";
+    },
+    //yを原点に戻す
+    resteTransfromOriginY: function () {
+      let [oldx, oldy] = document
+        .querySelector(".drawSvg")
+        .style.transformOrigin.split(" ")
+        .map((v) => parseFloat(v.replace("px", "")));
+      document.querySelector(".drawSvg").style.transformOrigin =
+        oldx + "px 0px";
     },
     /*----------------------------------------------------
       線描画
