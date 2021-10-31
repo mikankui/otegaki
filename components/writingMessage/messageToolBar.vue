@@ -63,9 +63,7 @@ export default {
       if (process.browser) {
         var dl = document.createElement("a");
 
-        let drawing = this.svgDataURL(
-          document.getElementsByClassName(".drawSvg")
-        );
+        let drawing = this.svgDataURL(document.getElementById("canvas"));
 
         //console.log (drawing)
 
@@ -86,15 +84,19 @@ export default {
     /** svg to png convert */
     async download_png() {
       console.log("start download png");
-      let drawing = this.svgDataURL(
-        document.getElementsByClassName(".drawSvg")
-      );
+      let drawing = this.svgDataURL(document.getElementById("canvas"));
       var canvas = document.createElement("canvas");
       canvas.width = this.board.width.baseVal.value;
       canvas.height = this.board.height.baseVal.value;
       console.log("create canvas:" + canvas.width + ":" + canvas.height);
 
       var ctx = canvas.getContext("2d");
+
+      //背景画像を初期値に戻す
+      //#22 ダウンロードした画像に背景が入らない
+      document.querySelector(".drawSvg").style.transformOrigin = "0px 0px";
+      //document.querySelector(".drawSvg").style.transform = "scale(1)";
+
       var image = await this.svgToImage(drawing);
       ctx.drawImage(image, 0, 0);
 

@@ -1,28 +1,27 @@
 <template>
-    <v-container>
-        <v-row>
-            <v-col 
-            v-for="(item,index) in items" :key="index"
-            class="d-flex child-flex"
-            style="justify-content: center;"
-            cols="12" sm="6" md="4" lg="3">
-
-                <v-card
-                max-width="300px"
-                @click="selectCard(item.cardId)"
-                >
-                <!--                    
+  <v-container>
+    <v-row>
+      <v-col
+        v-for="(item, index) in items"
+        :key="index"
+        class="d-flex child-flex"
+        style="justify-content: center"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
+        <v-card max-width="300px" @click="selectCard(item.cardId)">
+          <!--                    
                     <img 
                     :srcSet="item.srcSet" 
                     v-lazy="item.src" />
                     -->
-                    <img 
-                    v-lazy="item.src" />
-
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
+          <img v-lazy="item.src" />
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style >
@@ -33,12 +32,10 @@ img {
 </style>
 <script>
 export default {
-
-  data () {
+  data() {
     return {
-        items:[
-
-/*
+      items: [
+        /*
 {src:require('@/assets/images/original/alex-nicolopoulos-hxn2HjZHyQE-unsplash.jpg'+"?resize&sizes[]=300&sizes[]=600&sizes[]=1000")},
 {src:require('@/assets/images/original/arjun-ken-CeK8ohn3c7A-unsplash.jpg'+"?resize&sizes[]=300&sizes[]=600&sizes[]=1000")},
 {src:require('@/assets/images/original/brian-asare-91NYyecWlHA-unsplash.jpg'+"?resize&sizes[]=300&sizes[]=600&sizes[]=1000")},
@@ -71,9 +68,16 @@ export default {
 {src:require('@/assets/images/original/tim-zankert-gm3M-CsuynI-unsplash.jpg'+"?resize&sizes[]=300&sizes[]=600&sizes[]=1000")},
 {src:require('@/assets/images/original/wout-vanacker-l4HBYkURqvE-unsplash.jpg'+"?resize&sizes[]=300&sizes[]=600&sizes[]=1000")},
 */
-{cardId:'alex-nicolopoulos-hxn2HjZHyQE-unsplash',src:require('@/assets/images/W600PX/alex-nicolopoulos-hxn2HjZHyQE-unsplash.jpg')},
-/*
-{cardId:'arjun-ken-CeK8ohn3c7A-unsplash',src:require('@/assets/images/W600PX/arjun-ken-CeK8ohn3c7A-unsplash.jpg')},
+        {
+          cardId: "alex-nicolopoulos-hxn2HjZHyQE-unsplash",
+          src: require("@/assets/images/W600PX/alex-nicolopoulos-hxn2HjZHyQE-unsplash.jpg"),
+        },
+
+        {
+          cardId: "arjun-ken-CeK8ohn3c7A-unsplash",
+          src: require("@/assets/images/W600PX/arjun-ken-CeK8ohn3c7A-unsplash.jpg"),
+        },
+        /*
 {cardId:'brian-asare-91NYyecWlHA-unsplash',src:require('@/assets/images/W600PX/brian-asare-91NYyecWlHA-unsplash.jpg')},
 {cardId:'deva-williamson-ntfGWVbBiO0-unsplash',src:require('@/assets/images/W600PX/deva-williamson-ntfGWVbBiO0-unsplash.jpg')},
 {cardId:'dmitry-chernyshov-vzVWYIr6F8U-unsplash',src:require('@/assets/images/W600PX/dmitry-chernyshov-vzVWYIr6F8U-unsplash.jpg')},
@@ -103,17 +107,16 @@ export default {
 {cardId:'takashi-miyazaki-9wVMpUP9r0E-unsplash',src:require('@/assets/images/W600PX/takashi-miyazaki-9wVMpUP9r0E-unsplash.jpg')},
 {cardId:'tim-zankert-gm3M-CsuynI-unsplash',src:require('@/assets/images/W600PX/tim-zankert-gm3M-CsuynI-unsplash.jpg')},
 {cardId:'wout-vanacker-l4HBYkURqvE-unsplash',src:require('@/assets/images/W600PX/wout-vanacker-l4HBYkURqvE-unsplash.jpg')},
-        */],
-    }
+        */
+      ],
+    };
   },
 
   methods: {
-      selectCard:function(cardid){
-          
-          this.$store.commit('setSelectedCard',cardid);
-          this.$router.push('/message');
-          
-      }
-  }
-}
+    selectCard: function (cardid) {
+      this.$store.commit("setSelectedCard", cardid);
+      this.$router.push("/message");
+    },
+  },
+};
 </script>
