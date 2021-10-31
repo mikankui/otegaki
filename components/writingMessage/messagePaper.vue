@@ -117,7 +117,7 @@ export default {
   methods: {
     eventLog: function (log, mode = false) {
       let logstr = "";
-      if (!mode) return;
+      if (true) return;
       if (log != "") {
         logstr = document.getElementById("log").innerText + "\r\n";
       }
